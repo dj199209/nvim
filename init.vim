@@ -1,4 +1,6 @@
-" ======================
+" nvim的必要配置
+let g:python3_host_prog='C:\Users\dj\AppData\Local\Programs\Python\Python38\python.exe'
+let g:python_host_prog='C:\Python27\python2.7.exe'
 " ===000vim初始化配置===
 " ======================
 " ---001必要配置---
@@ -301,7 +303,41 @@ autocmd BufEnter * silent! lcd %:p:h
 " ===============
 "  ---插件安装---
 " ===============
-
+" Compile function
+noremap r :call CompileRunGcc()<CR>
+func! CompileRunGcc()
+	exec "w"
+	if &filetype == 'c'
+		exec "!g++ % -o %<"
+		exec "!time ./%<"
+	elseif &filetype == 'cpp'
+		set splitbelow
+		exec "!g++ -std=c++11 % -Wall -o %<"
+		:sp
+		:res -15
+		:term ./%<
+	elseif &filetype == 'java'
+		exec "!javac %"
+		exec "!time java %<"
+	elseif &filetype == 'sh'
+		:!time bash %
+	elseif &filetype == 'python'
+		set splitbelow
+		:sp
+		:term python3 %
+	elseif &filetype == 'html'
+		silent! exec "!chromium % &"
+	elseif &filetype == 'markdown'
+		exec "MarkdownPreview"
+	elseif &filetype == 'tex'
+		silent! exec "VimtexStop"
+		silent! exec "VimtexCompile"
+	elseif &filetype == 'go'
+		set splitbelow
+		:sp
+		:term go run %
+	endif
+endfunc
 " ===================
 " ===200 安装开始===
 " ===powershell的nvim的路径===
@@ -345,7 +381,17 @@ Plug 'easymotion/vim-easymotion'
 " <++> 包裹和替换成对符号
 Plug 'tpope/vim-surround'
 " markdwon浏览器预览
-Plug 'iamcco/markdown-preview.nvim'
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install_sync() }, 'for' :['markdown', 'vim-plug'] }
+
+" markdwon浏览器预览2(和浏览器预览冲突)
+" Plug 'suan/vim-instant-markdown', {'for': 'markdown'}
+" <++> 自动对齐 markdown
+Plug 'godlygeek/tabular'
+" <++> markdown语法高亮显示
+Plug 'plasticboy/vim-markdown'
+" <++> 自动生成目录
+Plug 'mzlogin/vim-markdown-toc'
+" <++> markdown目录管理插件
 call plug#end()
 "  *******插件安装结束***********
 
@@ -403,7 +449,47 @@ noremap <c-q> :History:<CR>
 " ===
 map <LEADER>gy :Goyo<CR>
 " ===
+" === MarkdownPreview
+" ===
+let g:mkdp_auto_start = 0
+let g:mkdp_auto_close = 1
+let g:mkdp_refresh_slow = 0
+let g:mkdp_command_for_global = 0
+let g:mkdp_open_to_the_world = 0
+let g:mkdp_open_ip = ''
+let g:mkdp_browser = 'chrome'
+let g:mkdp_echo_preview_url = 0
+let g:mkdp_browserfunc = ''
+let g:mkdp_preview_options = {
+    \ 'mkit': {},
+    \ 'katex': {},
+    \ 'uml': {},
+    \ 'maid': {},
+    \ 'disable_sync_scroll': 0,
+    \ 'sync_scroll_type': 'middle',
+    \ 'hide_yaml_meta': 1
+    \ }
+let g:mkdp_markdown_css = ''
+let g:mkdp_highlight_css = ''
+let g:mkdp_port = ''
+let g:mkdp_page_title = '「${name}」'
+" ===
 " === Undotree
 " ===
-let g:undotree_DiffAutoOpen = 0
 map LL :UndotreeToggle<CR>
+
+
+
+" Uncomment to override defaults:
+" let g:instant_markdown_slow = 1
+" let g:instant_markdown_autostart = 0
+" let g:instant_markdown_open_to_the_world = 1
+" let g:instant_markdown_allow_unsafe_content = 1
+" let g:instant_markdown_allow_external_content = 0
+" let g:instant_markdown_browser = "C:\Program Files (x86)\Google\Chrome\Application\chrome'"
+" let g:instant_markdown_mathjax = 1
+" let g:instant_markdown_logfile = '~/markdown/log'
+" let g:instant_markdown_autoscroll = 0
+" let g:instant_markdown_port = 8888
+" let g:instant_markdown_python = 1
+
