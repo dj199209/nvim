@@ -272,7 +272,7 @@ inoremap ," "" <++><Esc>F"i
 inoremap ,' "" <++><Esc>F'i
 " ===快捷编辑===
 inoremap ,b **** <++><Esc>F*hi
-inoremap <leader>b <Esc>I**<Esc>A**
+inoremap .b <Esc>I**<Esc>A**
 " 插入无序列表
 noremap ,- <Esc>I- <Esc>
 inoremap ,- <Esc>I- <Esc>
