@@ -24,9 +24,9 @@ set mouse=a
 " ===
 " <++> 
 set laststatus=2
-" <++> 
+" 自动切换工作目录 
 set autochdir
-" <++> 
+" 历史命令查看q: 
 set showcmd
 " <++> 
 set formatoptions-=tc
@@ -55,9 +55,9 @@ set wildmenu      " show a navigable menu for tab completion
 " 行线条
 set cursorline
 " 设置空格符号
-set list
-" set listchars=tab:\|\ ,trail:▫
-"set listchars=trail:▫
+" set list
+set listchars=tab:\|\ ,trail:▫ 
+set listchars=trail:▫
 " 字体不会超出当前屏幕
 set wrap
 " 光标
@@ -83,6 +83,7 @@ let &t_ut=''
 " =================
 " 禁用快捷键s
 noremap s <nop>
+noremap <C-z> <nop>
 " =========================
 " ---101打开关闭保存退出---
 " =========================
@@ -138,16 +139,23 @@ nnoremap K <C-u>
 " =====================
 " ---103复制粘贴撤销---
 " =====================
-
+" :echo has('clipboard')输出为1为支持可以复制的系统剪切板
 " 共享系统剪切板
 set clipboard=unnamed
 " make Y to copy till the end of the line
 nnoremap Y y$
 " Copy to system clipboard
 vnoremap Y "+y
+" 自动缩进
+set autoindent
+" 设置粘贴混乱
+noremap <leader>sp :set paste<CR>
+" 关闭粘贴缩进混乱
+noremap <leader>nsp :set nopaste<CR>
 " Redo
 nnoremap U <C-r>
-inoremap <C-z> <Esc>ua
+" inoremap <C-z> <Esc>ua
+
 " <++> 
 " map <LEADER>sr :%s/ 
 " 块命令修改
@@ -246,20 +254,24 @@ inoremap <C-x> <Esc>ea<C-x>s
 " ---107 markdown 快捷写入---
 " ===========================
 
-inoremap ,f <Esc>/<++><CR>:nohlsearch<CR>c4l
+inoremap ,,f <Esc>/<++><CR>:nohlsearch<CR>c4l
 inoremap ,tg <++> 
-inoremap ,n ---<Enter><Enter>
-inoremap ,s ~~~~ <++><Esc>F~hi
-inoremap ,i ** <++><Esc>F*i
-inoremap ,c ```<Enter><++><Enter>```<Enter><Enter><++><Esc>4kA
-inoremap ,h ====<Space><++><Esc>F=hi
-inoremap ,p ![](<++>) <++><Esc>F[a
-inoremap ,a [](<++>) <++><Esc>F[a
-inoremap ,1 #<Space><Enter><++><Esc>kA
-inoremap ,2 ##<Space><Enter><++><Esc>kA
-inoremap ,3 ###<Space><Enter><++><Esc>kA
-inoremap ,4 ####<Space><Enter><++><Esc>kA
-inoremap ,l --------<Enter>
+inoremap ,,n ---<Enter><Enter>
+inoremap ,,s~~~~ <++><Esc>F~hi
+inoremap ,,i ** <++><Esc>F*i
+inoremap ,,c ```<Enter><++><Enter>```<Enter><Enter><++><Esc>4kA
+inoremap ,,h ====<Space><++><Esc>F=hi
+inoremap ,,p ![](<++>) <++><Esc>F[a
+inoremap ,,a [](<++>) <++><Esc>F[a
+inoremap <LEADER>1 #<Space><Enter><++><Esc>kA
+noremap <LEADER>1 o#<Space><Enter><++><Esc>kA
+inoremap <LEADER>2 ##<Space><Enter><++><Esc>kA
+noremap <LEADER>2 o##<Space><Enter><++><Esc>kA
+inoremap <LEADER>3 ###<Space><Enter><++><Esc>kA
+noremap <LEADER>3 o###<Space><Enter><++><Esc>kA
+inoremap <LEADER>4 ####<Space><Enter><++><Esc>kA
+noremap <LEADER>4 o####<Space><Enter><++><Esc>kA
+inoremap ,,l --------<Enter>
 " Press leader twice to jump to the next '<++>' and edit it
 noremap <LEADER><LEADER> <Esc>/<++><CR>:nohlsearch<CR>c4l
 " 用了搜狗的成对出现
@@ -267,15 +279,15 @@ noremap <LEADER><LEADER> <Esc>/<++><CR>:nohlsearch<CR>c4l
 " inoremap ," "<Esc>A <++><Esc>F"i
 " inoremap ,' '<Esc>A <++><Esc>F'i
 " 没用了搜狗的成对出现
-inoremap ,w `` <++><Esc>F`i
-inoremap ," "" <++><Esc>F"i
-inoremap ,' "" <++><Esc>F'i
+inoremap ,,w `` <++><Esc>F`i
+inoremap ,," "" <++><Esc>F"i
+inoremap ,,' "" <++><Esc>F'i
 " ===快捷编辑===
 inoremap ,b **** <++><Esc>F*hi
 inoremap <leader>b <Esc>I**<Esc>A**
 " 插入无序列表
 noremap ,- <Esc>I- <Esc>
-inoremap ,- <Esc>I- <Esc>
+" inoremap ,- <Esc>I- <Esc> 无用
 "  插入num
 inoremap ,mm <Esc>I1. <Esc>j
 " ===快捷删除===
@@ -304,7 +316,7 @@ autocmd BufEnter * silent! lcd %:p:h
 "  ---插件安装---
 " ===============
 " Compile function
-noremap r :call CompileRunGcc()<CR>
+noremap <space>r :call CompileRunGcc()<CR>
 func! CompileRunGcc()
 	exec "w"
 	if &filetype == 'c'
@@ -388,7 +400,7 @@ Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install_sync() }, 'f
 " <++> 自动对齐 markdown
 Plug 'godlygeek/tabular'
 " <++> markdown语法高亮显示
-Plug 'plasticboy/vim-markdown'
+" Plug 'plasticboy/vim-markdown'
 " <++> 自动生成目录
 Plug 'mzlogin/vim-markdown-toc'
 " <++> markdown目录管理插件
@@ -397,7 +409,7 @@ call plug#end()
 
 " experimental
 " set lazyredraw
-set regexpengine=1
+" set regexpengine=1
 colorscheme snazzy
 " <++> 快速跳转快捷键SS自己设置
 nmap ss <Plug>(easymotion-s2)
