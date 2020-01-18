@@ -72,7 +72,7 @@ au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g
 " ---003兼容性配置---
 " Better backspace设置可以删除至下一行
 " set backspace=indent,eol,start
-" 解决插入模式下delete/backspce键失效问题
+" " 解决插入模式下delete/backspce键失效问题
 " set backspace=2
 " 设置粘贴混乱问题
 " Prevent incorrect backgroung rendering
@@ -316,40 +316,40 @@ autocmd BufEnter * silent! lcd %:p:h
 "  ---插件安装---
 " ===============
 " Compile function
-noremap <space>r :call CompileRunGcc()<CR>
-func! CompileRunGcc()
-	exec "w"
-	if &filetype == 'c'
-		exec "!g++ % -o %<"
-		exec "!time ./%<"
-	elseif &filetype == 'cpp'
-		set splitbelow
-		exec "!g++ -std=c++11 % -Wall -o %<"
-		:sp
-		:res -15
-		:term ./%<
-	elseif &filetype == 'java'
-		exec "!javac %"
-		exec "!time java %<"
-	elseif &filetype == 'sh'
-		:!time bash %
-	elseif &filetype == 'python'
-		set splitbelow
-		:sp
-		:term python3 %
-	elseif &filetype == 'html'
-		silent! exec "!chromium % &"
-	elseif &filetype == 'markdown'
-		exec "MarkdownPreview"
-	elseif &filetype == 'tex'
-		silent! exec "VimtexStop"
-		silent! exec "VimtexCompile"
-	elseif &filetype == 'go'
-		set splitbelow
-		:sp
-		:term go run %
-	endif
-endfunc
+" noremap <leader>r :call CompileRunGcc()<CR>
+" func! CompileRunGcc()
+" 	exec "w"
+" 	if &filetype == 'c'
+" 		exec "!g++ % -o %<"
+" 		exec "!time ./%<"
+" 	elseif &filetype == 'cpp'
+" 		set splitbelow
+" 		exec "!g++ -std=c++11 % -Wall -o %<"
+" 		:sp
+" 		:res -15
+" 		:term ./%<
+" 	elseif &filetype == 'java'
+" 		exec "!javac %"
+" 		exec "!time java %<"
+" 	elseif &filetype == 'sh'
+" 		:!time bash %
+" 	elseif &filetype == 'python'
+" 		set splitbelow
+" 		:sp
+" 		:term python3 %
+" 	elseif &filetype == 'html'
+" 		silent! exec "!chromium % &"
+" 	elseif &filetype == 'markdown'
+" 		exec "MarkdownPreview"
+" 	elseif &filetype == 'tex'
+" 		silent! exec "VimtexStop"
+" 		silent! exec "VimtexCompile"
+" 	elseif &filetype == 'go'
+" 		set splitbelow
+" 		:sp
+" 		:term go run %
+" 	endif
+" endfunc
 " ===================
 " ===200 安装开始===
 " ===powershell的nvim的路径===
@@ -394,7 +394,8 @@ Plug 'easymotion/vim-easymotion'
 Plug 'tpope/vim-surround'
 " markdwon浏览器预览
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install_sync() }, 'for' :['markdown', 'vim-plug'] }
-
+" vim-wiki笔记本体系
+Plug 'vimwiki/vimwiki'
 " markdwon浏览器预览2(和浏览器预览冲突)
 " Plug 'suan/vim-instant-markdown', {'for': 'markdown'}
 " <++> 自动对齐 markdown
@@ -463,6 +464,7 @@ map <LEADER>gy :Goyo<CR>
 " ===
 " === MarkdownPreview
 " ===
+nnoremap <space>r :MarkdownPreview<CR>
 let g:mkdp_auto_start = 0
 let g:mkdp_auto_close = 1
 let g:mkdp_refresh_slow = 0
@@ -490,8 +492,6 @@ let g:mkdp_page_title = '「${name}」'
 " ===
 map LL :UndotreeToggle<CR>
 
-
-
 " Uncomment to override defaults:
 " let g:instant_markdown_slow = 1
 " let g:instant_markdown_autostart = 0
@@ -505,3 +505,9 @@ map LL :UndotreeToggle<CR>
 " let g:instant_markdown_port = 8888
 " let g:instant_markdown_python = 1
 
+" ===
+" ===vim-wiki笔记本体系
+" ===
+let g:vimwiki_list = [{'path': '~/vimwiki/',
+                      \ 'syntax': 'markdown', 'ext': '.md'}]
+nnoremap <Space>wb :VimwikiGoBackLink<CR>
