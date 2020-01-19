@@ -24,9 +24,9 @@ set mouse=a
 " ===
 " <++> 
 set laststatus=2
-" <++> 
+" 自动切换工作目录 
 set autochdir
-" <++> 
+" 历史命令查看q: 
 set showcmd
 " <++> 
 set formatoptions-=tc
@@ -55,9 +55,9 @@ set wildmenu      " show a navigable menu for tab completion
 " 行线条
 set cursorline
 " 设置空格符号
-set list
-" set listchars=tab:\|\ ,trail:▫
-"set listchars=trail:▫
+" set list
+set listchars=tab:\|\ ,trail:▫ 
+set listchars=trail:▫
 " 字体不会超出当前屏幕
 set wrap
 " 光标
@@ -72,10 +72,8 @@ au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g
 " ---003兼容性配置---
 " Better backspace设置可以删除至下一行
 " set backspace=indent,eol,start
-" 解决插入模式下delete/backspce键失效问题
+" " 解决插入模式下delete/backspce键失效问题
 " set backspace=2
-" 设置粘贴混乱问题
-" Prevent incorrect backgroung rendering
 let &t_ut=''
 
 " =================
@@ -83,6 +81,7 @@ let &t_ut=''
 " =================
 " 禁用快捷键s
 noremap s <nop>
+noremap <C-z> <nop>
 " =========================
 " ---101打开关闭保存退出---
 " =========================
@@ -134,20 +133,26 @@ nnoremap K <C-u>
 " nnoremap J 6j
 " nnoremap K 6k
 "
-
 " =====================
 " ---103复制粘贴撤销---
 " =====================
-
+" :echo has('clipboard')输出为1为支持可以复制的系统剪切板
 " 共享系统剪切板
 set clipboard=unnamed
 " make Y to copy till the end of the line
 nnoremap Y y$
 " Copy to system clipboard
 vnoremap Y "+y
+" 自动缩进
+set autoindent
+" 设置粘贴混乱
+noremap <leader>sp :set paste<CR>
+" 关闭粘贴缩进混乱
+noremap <leader>nsp :set nopaste<CR>
 " Redo
 nnoremap U <C-r>
-inoremap <C-z> <Esc>ua
+" inoremap <C-z> <Esc>ua
+
 " <++> 
 " map <LEADER>sr :%s/ 
 " 块命令修改
@@ -231,6 +236,7 @@ map tl :+tabnext<CR>
 map tmh :-tabmove<CR>
 map tml :+tabmove<CR>
 
+
 " =================
 " ---106指令输入---
 " =================
@@ -246,20 +252,24 @@ inoremap <C-x> <Esc>ea<C-x>s
 " ---107 markdown 快捷写入---
 " ===========================
 
-inoremap ,f <Esc>/<++><CR>:nohlsearch<CR>c4l
+inoremap ,,f <Esc>/<++><CR>:nohlsearch<CR>c4l
 inoremap ,tg <++> 
-inoremap ,n ---<Enter><Enter>
-inoremap ,s ~~~~ <++><Esc>F~hi
-inoremap ,i ** <++><Esc>F*i
-inoremap ,c ```<Enter><++><Enter>```<Enter><Enter><++><Esc>4kA
-inoremap ,h ====<Space><++><Esc>F=hi
-inoremap ,p ![](<++>) <++><Esc>F[a
-inoremap ,a [](<++>) <++><Esc>F[a
-inoremap ,1 #<Space><Enter><++><Esc>kA
-inoremap ,2 ##<Space><Enter><++><Esc>kA
-inoremap ,3 ###<Space><Enter><++><Esc>kA
-inoremap ,4 ####<Space><Enter><++><Esc>kA
-inoremap ,l --------<Enter>
+inoremap ,,n ---<Enter><Enter>
+inoremap ,,s~~~~ <++><Esc>F~hi
+inoremap ,,i ** <++><Esc>F*i
+inoremap ,,c ```<Enter><++><Enter>```<Enter><Enter><++><Esc>4kA
+inoremap ,,h ====<Space><++><Esc>F=hi
+inoremap ,,p ![](<++>) <++><Esc>F[a
+inoremap ,,a [](<++>) <++><Esc>F[a
+inoremap <LEADER>1 #<Space><Enter><++><Esc>kA
+noremap <LEADER>1 o#<Space><Enter><++><Esc>kA
+inoremap <LEADER>2 ##<Space><Enter><++><Esc>kA
+noremap <LEADER>2 o##<Space><Enter><++><Esc>kA
+inoremap <LEADER>3 ###<Space><Enter><++><Esc>kA
+noremap <LEADER>3 o###<Space><Enter><++><Esc>kA
+inoremap <LEADER>4 ####<Space><Enter><++><Esc>kA
+noremap <LEADER>4 o####<Space><Enter><++><Esc>kA
+inoremap ,,l --------<Enter>
 " Press leader twice to jump to the next '<++>' and edit it
 noremap <LEADER><LEADER> <Esc>/<++><CR>:nohlsearch<CR>c4l
 " 用了搜狗的成对出现
@@ -267,15 +277,15 @@ noremap <LEADER><LEADER> <Esc>/<++><CR>:nohlsearch<CR>c4l
 " inoremap ," "<Esc>A <++><Esc>F"i
 " inoremap ,' '<Esc>A <++><Esc>F'i
 " 没用了搜狗的成对出现
-inoremap ,w `` <++><Esc>F`i
-inoremap ," "" <++><Esc>F"i
-inoremap ,' "" <++><Esc>F'i
+inoremap ,,w `` <++><Esc>F`i
+inoremap ,," "" <++><Esc>F"i
+inoremap ,,' "" <++><Esc>F'i
 " ===快捷编辑===
 inoremap ,b **** <++><Esc>F*hi
-inoremap .b <Esc>I**<Esc>A**
+inoremap <leader>b <Esc>I**<Esc>A**
 " 插入无序列表
 noremap ,- <Esc>I- <Esc>
-inoremap ,- <Esc>I- <Esc>
+" inoremap ,- <Esc>I- <Esc> 无用
 "  插入num
 inoremap ,mm <Esc>I1. <Esc>j
 " ===快捷删除===
@@ -303,8 +313,8 @@ autocmd BufEnter * silent! lcd %:p:h
 " ===============
 "  ---插件安装---
 " ===============
-" Compile function
-noremap r :call CompileRunGcc()<CR>
+Compile function
+noremap <leader>r :call CompileRunGcc()<CR>
 func! CompileRunGcc()
 	exec "w"
 	if &filetype == 'c'
@@ -345,151 +355,38 @@ call plug#begin('~\AppData\Local\nvim\autoload')
 " ===============
 " 201 状态栏修饰 aieline
 Plug 'vim-airline/vim-airline'
-" 211 vim主题样式部分 snazzy
-Plug 'connorholyday/vim-snazzy'
+" ===============
 " 221引导界面 startify
 Plug 'mhinz/vim-startify'
+" ===============
 " <++> git序号栏显示修改信息
 Plug 'mhinz/vim-signify'
+" ===============
 " <++> 使用 `,m`在序号栏打标记,]+`&`[ 跳转 signature m+<sapce>delall
 Plug 'kshenoy/vim-signature'
+" ===============
 " <++> 错误检查
  Plug 'dense-analysis/ale'
+" ===============
 " <++> 自动补全插件Auto Complete
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" ===============
 " <++> ctrtp搜索打开文件 ctrlp.vim
 Plug 'kien/ctrlp.vim'
+" ===============
 " <++> FZF文件快速搜索
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
+" ===============
 " <++> 安心阅读 junegunn/goyo.vim
 Plug 'junegunn/goyo.vim'
 " <++> 缩进标尺indentLine
-Plug 'Yggdroot/indentLine'
+" Plug 'Yggdroot/indentLine'
 " <++> 代码补全插件coc
 Plug 'neoclide/coc.nvim'
-" <++>  File navigation 文件目录树
-Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
-" <++> git 目录树修改图标显示
-Plug 'Xuyuanp/nerdtree-git-plugin'
-" <++> 修改版本库 undotree
-Plug 'mbbill/undotree'
-" <++> 备注代码 gc gcc gcap
-Plug 'tpope/vim-commentary'
-" <++> 快速跳转快捷键SS自己设置
-Plug 'easymotion/vim-easymotion'
-" <++> 包裹和替换成对符号
-Plug 'tpope/vim-surround'
-" markdwon浏览器预览
-Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install_sync() }, 'for' :['markdown', 'vim-plug'] }
-
-" markdwon浏览器预览2(和浏览器预览冲突)
-" Plug 'suan/vim-instant-markdown', {'for': 'markdown'}
-" <++> 自动对齐 markdown
-Plug 'godlygeek/tabular'
-" <++> markdown语法高亮显示
-Plug 'plasticboy/vim-markdown'
-" <++> 自动生成目录
-Plug 'mzlogin/vim-markdown-toc'
-" <++> markdown目录管理插件
+" vim-wiki笔记本体系
+Plug 'vimwiki/vimwiki'
+" ===============
 call plug#end()
-"  *******插件安装结束***********
-
-" experimental
-" set lazyredraw
-set regexpengine=1
-colorscheme snazzy
-" <++> 快速跳转快捷键SS自己设置
-nmap ss <Plug>(easymotion-s2)
-" ===
-" === NERDTree
-" ===
-noremap tt :NERDTreeToggle<CR>
-let NERDTreeMapOpenExpl = ""
-let NERDTreeMapUpdir = "N"
-let NERDTreeMapUpdirKeepOpen = "n"
-let NERDTreeMapOpenSplit = ""
-let NERDTreeMapOpenVSplit = "I"
-let NERDTreeMapActivateNode = "i"
-let NERDTreeMapOpenInTab = "o"
-let NERDTreeMapOpenInTabSilent = "O"
-let NERDTreeMapPreview = ""
-let NERDTreeMapCloseDir = ""
-let NERDTreeMapChangeRoot = "l"
-let NERDTreeMapMenu = ","
-let NERDTreeMapToggleHidden = "zh"
-
-
-" ===
-" === NERDTree-git
-" ===
-let g:NERDTreeIndicatorMapCustom = {
-    \ "Modified"  : "✹",
-    \ "Staged"    : "✚",
-    \ "Untracked" : "✭",
-    \ "Renamed"   : "➜",
-    \ "Unmerged"  : "═",
-    \ "Deleted"   : "✖",
-    \ "Dirty"     : "✗",
-    \ "Clean"     : "✔︎",
-    \ "Unknown"   : "?"
-    \ }
-" ===
-" === FZF
-" ===
-noremap <leader>p :FZF<CR>
-noremap <C-w> :Buffers<CR>
-noremap <c-q> :History:<CR>
-" noremap <C-f> :Ag<CR>
-" noremap <C-h> :MRU<CR>
-" noremap <C-t> :BTags<CR>
-" noremap <C-l> :LinesWithPreview<CR>
-" ===
-" === Goyo
-" ===
-map <LEADER>gy :Goyo<CR>
-" ===
-" === MarkdownPreview
-" ===
-let g:mkdp_auto_start = 0
-let g:mkdp_auto_close = 1
-let g:mkdp_refresh_slow = 0
-let g:mkdp_command_for_global = 0
-let g:mkdp_open_to_the_world = 0
-let g:mkdp_open_ip = ''
-let g:mkdp_browser = 'chrome'
-let g:mkdp_echo_preview_url = 0
-let g:mkdp_browserfunc = ''
-let g:mkdp_preview_options = {
-    \ 'mkit': {},
-    \ 'katex': {},
-    \ 'uml': {},
-    \ 'maid': {},
-    \ 'disable_sync_scroll': 0,
-    \ 'sync_scroll_type': 'middle',
-    \ 'hide_yaml_meta': 1
-    \ }
-let g:mkdp_markdown_css = ''
-let g:mkdp_highlight_css = ''
-let g:mkdp_port = ''
-let g:mkdp_page_title = '「${name}」'
-" ===
-" === Undotree
-" ===
-map LL :UndotreeToggle<CR>
-
-
-
-" Uncomment to override defaults:
-" let g:instant_markdown_slow = 1
-" let g:instant_markdown_autostart = 0
-" let g:instant_markdown_open_to_the_world = 1
-" let g:instant_markdown_allow_unsafe_content = 1
-" let g:instant_markdown_allow_external_content = 0
-" let g:instant_markdown_browser = "C:\Program Files (x86)\Google\Chrome\Application\chrome'"
-" let g:instant_markdown_mathjax = 1
-" let g:instant_markdown_logfile = '~/markdown/log'
-" let g:instant_markdown_autoscroll = 0
-" let g:instant_markdown_port = 8888
-" let g:instant_markdown_python = 1
-
+let g:vimwiki_list = [{'path': '~/vimwiki/',
+                      \ 'syntax': 'markdown', 'ext': '.md'}]

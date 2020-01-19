@@ -74,8 +74,6 @@ au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g
 " set backspace=indent,eol,start
 " " 解决插入模式下delete/backspce键失效问题
 " set backspace=2
-" 设置粘贴混乱问题
-" Prevent incorrect backgroung rendering
 let &t_ut=''
 
 " =================
@@ -290,6 +288,8 @@ noremap ,- <Esc>I- <Esc>
 " inoremap ,- <Esc>I- <Esc> 无用
 "  插入num
 inoremap ,mm <Esc>I1. <Esc>j
+" 快速插入后缀.md
+noremap  ,,e f)i.md<Esc>
 " ===快捷删除===
 inoremap <leader>b <Esc>^xx<Esc>$xxA
 " del
@@ -357,45 +357,68 @@ call plug#begin('~\AppData\Local\nvim\autoload')
 " ===============
 " 201 状态栏修饰 aieline
 Plug 'vim-airline/vim-airline'
+" ===============
 " 211 vim主题样式部分 snazzy
 Plug 'connorholyday/vim-snazzy'
+" ===============
 " 221引导界面 startify
 Plug 'mhinz/vim-startify'
+" ===============
 " <++> git序号栏显示修改信息
 Plug 'mhinz/vim-signify'
+" ===============
 " <++> 使用 `,m`在序号栏打标记,]+`&`[ 跳转 signature m+<sapce>delall
 Plug 'kshenoy/vim-signature'
+" ===============
 " <++> 错误检查
  Plug 'dense-analysis/ale'
+" ===============
 " <++> 自动补全插件Auto Complete
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" ===============
 " <++> ctrtp搜索打开文件 ctrlp.vim
 Plug 'kien/ctrlp.vim'
+" ===============
 " <++> FZF文件快速搜索
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
+" ===============
 " <++> 安心阅读 junegunn/goyo.vim
 Plug 'junegunn/goyo.vim'
+" ===============
 " <++> 缩进标尺indentLine
 Plug 'Yggdroot/indentLine'
+" ===============
 " <++> 代码补全插件coc
 Plug 'neoclide/coc.nvim'
+" ===============
 " <++>  File navigation 文件目录树
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
+" ===============
 " <++> git 目录树修改图标显示
 Plug 'Xuyuanp/nerdtree-git-plugin'
+" ===============
 " <++> 修改版本库 undotree
 Plug 'mbbill/undotree'
+" ===============
 " <++> 备注代码 gc gcc gcap
 Plug 'tpope/vim-commentary'
+" ===============
 " <++> 快速跳转快捷键SS自己设置
 Plug 'easymotion/vim-easymotion'
+" ===============
 " <++> 包裹和替换成对符号
 Plug 'tpope/vim-surround'
+" ===============
 " markdwon浏览器预览
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install_sync() }, 'for' :['markdown', 'vim-plug'] }
+" ===============
 " vim-wiki笔记本体系
 Plug 'vimwiki/vimwiki'
+" ===============
+" <++> markdown图片粘贴
+Plug 'ferrine/md-img-paste.vim'
+" ===============
 " markdwon浏览器预览2(和浏览器预览冲突)
 " Plug 'suan/vim-instant-markdown', {'for': 'markdown'}
 " <++> 自动对齐 markdown
@@ -403,8 +426,9 @@ Plug 'godlygeek/tabular'
 " <++> markdown语法高亮显示
 " Plug 'plasticboy/vim-markdown'
 " <++> 自动生成目录
-Plug 'mzlogin/vim-markdown-toc'
+" Plug 'mzlogin/vim-markdown-toc'
 " <++> markdown目录管理插件
+
 call plug#end()
 "  *******插件安装结束***********
 
@@ -417,7 +441,7 @@ nmap ss <Plug>(easymotion-s2)
 " ===
 " === NERDTree
 " ===
-noremap tt :NERDTreeToggle<CR>
+nnoremap tt :NERDTreeToggle<CR>
 let NERDTreeMapOpenExpl = ""
 let NERDTreeMapUpdir = "N"
 let NERDTreeMapUpdirKeepOpen = "n"
@@ -492,22 +516,33 @@ let g:mkdp_page_title = '「${name}」'
 " ===
 map LL :UndotreeToggle<CR>
 
-" Uncomment to override defaults:
-" let g:instant_markdown_slow = 1
-" let g:instant_markdown_autostart = 0
-" let g:instant_markdown_open_to_the_world = 1
-" let g:instant_markdown_allow_unsafe_content = 1
-" let g:instant_markdown_allow_external_content = 0
-" let g:instant_markdown_browser = "C:\Program Files (x86)\Google\Chrome\Application\chrome'"
-" let g:instant_markdown_mathjax = 1
-" let g:instant_markdown_logfile = '~/markdown/log'
-" let g:instant_markdown_autoscroll = 0
-" let g:instant_markdown_port = 8888
-" let g:instant_markdown_python = 1
+" ===
+" === 缩进标尺indentLine
+" ===
+noremap <leader>ty :IndentLinesToggle<CR>
 
 " ===
 " ===vim-wiki笔记本体系
 " ===
-let g:vimwiki_list = [{'path': '~/vimwiki/',
-                      \ 'syntax': 'markdown', 'ext': '.md'}]
-nnoremap <Space>wb :VimwikiGoBackLink<CR>
+let wiki_1 = {}
+let wiki_1.path = '~/Github/notebooks/'
+let wiki_1.syntax = 'markdown'
+let wiki_1.ext = '.md'
+let g:vimwiki_ext1syntax = {'.md': 'markdown', '.markdown': 'markdown', '.mdown': 'markdown'}
+let wiki_2 = {}
+let wiki_2.path = '~/Github/notebooks/Java/'
+let wiki_2.syntax = 'markdown'
+let wiki_2.ext = '.md'
+let g:vimwiki_ext2syntax = {'.md': 'markdown', '.markdown': 'markdown', '.mdown': 'markdown'}
+let wiki_3 = {}
+let wiki_3.path = '~/Github/notebooks/Linux'
+let wiki_3.syntax = 'markdown'
+let wiki_3.ext = '.md'
+let g:vimwiki_list = [wiki_1,wiki_2,wiki_3]
+let g:vimwiki_ext3syntax = {'.md': 'markdown', '.markdown': 'markdown', '.mdown': 'markdown'}
+nnoremap <Space>bb :VimwikiGoBackLink<CR>
+
+" ===
+" === markdown图片粘贴
+" ===
+noremap  <space>pp :call mdip#MarkdownClipboardImage()<CR>
