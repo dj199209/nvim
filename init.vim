@@ -389,8 +389,6 @@ Plug 'junegunn/goyo.vim'
 " <++> 缩进标尺indentLine
 Plug 'Yggdroot/indentLine'
 " ===============
-" <++> 代码补全插件coc
-Plug 'neoclide/coc.nvim'
 " ===============
 " <++>  File navigation 文件目录树
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
@@ -413,7 +411,7 @@ Plug 'tpope/vim-surround'
 " markdwon浏览器预览
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install_sync() }, 'for' :['markdown', 'vim-plug'] }
 " ===============
-" vim-wiki笔记本体系
+" " vim-wiki笔记本体系
 Plug 'vimwiki/vimwiki'
 " ===============
 " <++> markdown图片粘贴
