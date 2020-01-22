@@ -1,6 +1,29 @@
 " nvim的必要配置
 let g:python3_host_prog='C:\Users\dj\AppData\Local\Programs\Python\Python38\python.exe'
 let g:python_host_prog='C:\Python27\python2.7.exe'
+" ===
+" === Terminal Behaviors
+" ===
+let g:neoterm_autoscroll = 1
+autocmd TermOpen term://* startinsert
+tnoremap <C-N> <C-\><C-N>
+tnoremap <C-O> <C-\><C-N><C-O>
+let g:terminal_color_0  = '#000000'
+let g:terminal_color_1  = '#FF5555'
+let g:terminal_color_2  = '#50FA7B'
+let g:terminal_color_3  = '#F1FA8C'
+let g:terminal_color_4  = '#BD93F9'
+let g:terminal_color_5  = '#FF79C6'
+let g:terminal_color_6  = '#8BE9FD'
+let g:terminal_color_7  = '#BFBFBF'
+let g:terminal_color_8  = '#4D4D4D'
+let g:terminal_color_9  = '#FF6E67'
+let g:terminal_color_10 = '#5AF78E'
+let g:terminal_color_11 = '#F4F99D'
+let g:terminal_color_12 = '#CAA9FA'
+let g:terminal_color_13 = '#FF92D0'
+let g:terminal_color_14 = '#9AEDFE'
+"
 " ===000vim初始化配置===
 " ======================
 " ---001必要配置---
@@ -47,15 +70,16 @@ set number
 " 开启相对行号
 set relativenumber
 " Show command autocomplete
-set wildignore=log/**,node_modules/**,target/**,tmp/**,*.rbc
+" set wildignore=log/**,node_modules/**,target/**,tmp/**,*.rbc
+
 " 补全指令
 set wildmenu      " show a navigable menu for tab completion
 " <++> 
-"set wildmode=longest,list,full
+set wildmode=longest,list,full
 " 行线条
 set cursorline
 " 设置空格符号
-" set list
+set list
 set listchars=tab:\|\ ,trail:▫ 
 set listchars=trail:▫
 " 字体不会超出当前屏幕
@@ -374,7 +398,7 @@ Plug 'kshenoy/vim-signature'
  Plug 'dense-analysis/ale'
 " ===============
 " <++> 自动补全插件Auto Complete
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " ===============
 " <++> ctrtp搜索打开文件 ctrlp.vim
 Plug 'kien/ctrlp.vim'
@@ -420,12 +444,24 @@ Plug 'ferrine/md-img-paste.vim'
 " markdwon浏览器预览2(和浏览器预览冲突)
 " Plug 'suan/vim-instant-markdown', {'for': 'markdown'}
 " <++> 自动对齐 markdown
-Plug 'godlygeek/tabular'
+" Plug 'godlygeek/tabular'
+" " ===============
+" <++> vim-table-mode表格自动美化
+" Plug 'dhruvasagar/vim-table-mode', { 'on': 'TableModeToggle' }
+" ===============
 " <++> markdown语法高亮显示
 " Plug 'plasticboy/vim-markdown'
 " <++> 自动生成目录
 " Plug 'mzlogin/vim-markdown-toc'
 " <++> markdown目录管理插件
+" <++> swich切换tru和flase
+" <++>  Tabularize代码对齐
+" <++> simpyFold折叠代码
+" <++> 高亮对应的变量semshi
+" <++> 批量改名coc
+" <++> Far查看相同处
+" 显示函数列表 Taglist
+" Plug 'liuchengxu/vista.vim'
 
 call plug#end()
 "  *******插件安装结束***********
@@ -523,24 +559,30 @@ noremap <leader>ty :IndentLinesToggle<CR>
 " ===vim-wiki笔记本体系
 " ===
 let wiki_1 = {}
-let wiki_1.path = '~/Github/notebooks/'
+let wiki_1.path = '~/Github/TO_DO/'
 let wiki_1.syntax = 'markdown'
 let wiki_1.ext = '.md'
 let g:vimwiki_ext1syntax = {'.md': 'markdown', '.markdown': 'markdown', '.mdown': 'markdown'}
 let wiki_2 = {}
-let wiki_2.path = '~/Github/notebooks/Java/'
+let wiki_2.path = '~/Github/study_notes/'
 let wiki_2.syntax = 'markdown'
 let wiki_2.ext = '.md'
 let g:vimwiki_ext2syntax = {'.md': 'markdown', '.markdown': 'markdown', '.mdown': 'markdown'}
 let wiki_3 = {}
-let wiki_3.path = '~/Github/notebooks/Linux'
+let wiki_3.path = '~/Github/work_notes'
 let wiki_3.syntax = 'markdown'
 let wiki_3.ext = '.md'
 let g:vimwiki_list = [wiki_1,wiki_2,wiki_3]
 let g:vimwiki_ext3syntax = {'.md': 'markdown', '.markdown': 'markdown', '.mdown': 'markdown'}
 nnoremap <Space>bb :VimwikiGoBackLink<CR>
-
+inoremap <LEADER>tm <Esc>:VimwikiTable<CR>
 " ===
 " === markdown图片粘贴
 " ===
 noremap  <space>pp :call mdip#MarkdownClipboardImage()<CR>
+" ===
+" === vim-table-mode
+" ===
+"noremap <LEADER>tm :TableModeToggle<CR>
+""let g:table_mode_disable_mappings = 1
+"let g:table_mode_cell_text_object_i_map = 'k<Bar>'
