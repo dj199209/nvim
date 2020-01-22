@@ -376,11 +376,13 @@ autocmd BufEnter * silent! lcd %:p:h
 " endfunc
 " ===================
 " ===200 安装开始===
+" ===200 安装开始===
 " ===powershell的nvim的路径===
 call plug#begin('~\AppData\Local\nvim\autoload')
 " ===============
 " 201 状态栏修饰 aieline
 Plug 'vim-airline/vim-airline'
+
 " ===============
 " 211 vim主题样式部分 snazzy
 Plug 'connorholyday/vim-snazzy'
