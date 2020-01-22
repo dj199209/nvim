@@ -135,7 +135,7 @@ noremap L $
 " nnoremap H ^
 " nnoremap L $
 " Insert模式下移动
-inoremap <C-l> <right>
+inoremaj <C-l> <right>
 inoremap hH <left>
 inoremap <C-j> <Down>
 inoremap <C-k> <Up>
@@ -376,13 +376,12 @@ autocmd BufEnter * silent! lcd %:p:h
 " endfunc
 " ===================
 " ===200 安装开始===
-" ===200 安装开始===
 " ===powershell的nvim的路径===
 call plug#begin('~\AppData\Local\nvim\autoload')
+" call plug#begin('~/.config/nvim/autoload')
 " ===============
 " 201 状态栏修饰 aieline
 Plug 'vim-airline/vim-airline'
-
 " ===============
 " 211 vim主题样式部分 snazzy
 Plug 'connorholyday/vim-snazzy'
