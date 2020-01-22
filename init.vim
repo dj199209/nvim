@@ -123,7 +123,8 @@ nnoremap R :w<CR>:source $MYVIMRC<CR>
 " nnoremap R :source \Users\dj\_ideavimrc<CR>
 "
 " Linux_Open the vimrc file anytime
-noremap <LEADER>rc :e ~\AppData\Local\nvim\init.vim <CR>
+" noremap <LEADER>rc :e ~\AppData\Local\nvim\init.vim <CR>
+noremap <LEADER>rc :e ~/.config/nvim/init.vim <CR>
 " Open Startify
 noremap <LEADER>st :Startify<CR>
 " =============
@@ -135,7 +136,7 @@ noremap L $
 " nnoremap H ^
 " nnoremap L $
 " Insert模式下移动
-inoremaj <C-l> <right>
+inoremap <C-l> <right>
 inoremap hH <left>
 inoremap <C-j> <Down>
 inoremap <C-k> <Up>
@@ -377,13 +378,9 @@ autocmd BufEnter * silent! lcd %:p:h
 " ===================
 " ===200 安装开始===
 " ===powershell的nvim的路径===
-<<<<<<< HEAD
 " call plug#begin('~\AppData\Local\nvim\autoload')
 call plug#begin('~/.config/nvim/autoload')
-=======
-call plug#begin('~\AppData\Local\nvim\autoload')
 " call plug#begin('~/.config/nvim/autoload')
->>>>>>> 81d1ea315a33c3b5d229cf47e54ba8fe5beda745
 " ===============
 " 201 状态栏修饰 aieline
 Plug 'vim-airline/vim-airline'
@@ -439,7 +436,7 @@ Plug 'easymotion/vim-easymotion'
 Plug 'tpope/vim-surround'
 " ===============
 " markdwon浏览器预览
-Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install_sync() }, 'for' :['markdown', 'vim-plug'] }
+" Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install_sync() }, 'for' :['markdown', 'vim-plug'] }
 " ===============
 " " vim-wiki笔记本体系
 Plug 'vimwiki/vimwiki'
