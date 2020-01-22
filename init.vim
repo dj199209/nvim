@@ -377,8 +377,13 @@ autocmd BufEnter * silent! lcd %:p:h
 " ===================
 " ===200 安装开始===
 " ===powershell的nvim的路径===
+<<<<<<< HEAD
 " call plug#begin('~\AppData\Local\nvim\autoload')
 call plug#begin('~/.config/nvim/autoload')
+=======
+call plug#begin('~\AppData\Local\nvim\autoload')
+" call plug#begin('~/.config/nvim/autoload')
+>>>>>>> 81d1ea315a33c3b5d229cf47e54ba8fe5beda745
 " ===============
 " 201 状态栏修饰 aieline
 Plug 'vim-airline/vim-airline'
