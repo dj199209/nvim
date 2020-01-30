@@ -38,8 +38,9 @@ filetype plugin on
 " <++> 
 filetype plugin indent on
 " 设置编码格式
-set encoding=utf-8
+set encoding=utf-8 
 set fileencoding=utf-8
+set fileencodings=utf-8,ucs-bom,gb18030,gbk,gb2312,cp936
 " 可以使用鼠标
 set mouse=a
 " ===
@@ -123,8 +124,8 @@ nnoremap R :w<CR>:source $MYVIMRC<CR>
 " nnoremap R :source \Users\dj\_ideavimrc<CR>
 "
 " Linux_Open the vimrc file anytime
-" noremap <LEADER>rc :e ~\AppData\Local\nvim\init.vim <CR>
-noremap <LEADER>rc :e ~/.config/nvim/init.vim <CR>
+noremap <LEADER>rc :e ~\AppData\Local\nvim\init.vim <CR>
+" noremap <LEADER>rc :e ~/.config/nvim/init.vim <CR>Q
 " Open Startify
 noremap <LEADER>st :Startify<CR>
 " =============
@@ -378,8 +379,8 @@ autocmd BufEnter * silent! lcd %:p:h
 " ===================
 " ===200 安装开始===
 " ===powershell的nvim的路径===
-" call plug#begin('~\AppData\Local\nvim\autoload')
-call plug#begin('~/.config/nvim/autoload')
+call plug#begin('~\AppData\Local\nvim\autoload')
+" call plug#begin('~/.config/nvim/autoload')
 " call plug#begin('~/.config/nvim/autoload')
 " ===============
 " 201 状态栏修饰 aieline
@@ -436,7 +437,7 @@ Plug 'easymotion/vim-easymotion'
 Plug 'tpope/vim-surround'
 " ===============
 " markdwon浏览器预览
-" Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install_sync() }, 'for' :['markdown', 'vim-plug'] }
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install_sync() }, 'for' :['markdown', 'vim-plug'] }
 " ===============
 " " vim-wiki笔记本体系
 Plug 'vimwiki/vimwiki'
